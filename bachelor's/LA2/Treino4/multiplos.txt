@@ -1,0 +1,24 @@
+def complete(n,d,c):
+    return len(c) == n
+
+def extensions(n,d,c):
+    return [i for i in range(1, n+1) if i not in c]
+        
+def valid(n,d,c):
+    return 
+    
+def aux(n,d,c):
+    if complete(n,d,c):
+        return valid(n,d,c)
+    for x in extensions(n,d,c):
+        c.append(x)
+        if aux(n,d,c):
+            return True
+        c.pop()
+    return False
+
+
+def multiplos(n,d):
+    c = []
+    if aux(n, d, c):
+        return c

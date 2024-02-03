@@ -1,0 +1,32 @@
+def calculaElementos(l):
+    conjunto = set()
+    for elemento in l:
+        conjunto = conjunto.union(elemento)
+    return len(conjunto)
+
+def complete(i, c):
+    return len(c) == i
+
+def extensions(c, sets, t, last):
+    return filter(lambda x: last<sets.index(x), sets)
+
+def valid(c, t):
+    return calculaElementos(c) == t
+
+def aux(c, sets, i, t, last):
+    if complete(i, c):
+        return valid(c, t)
+    for x in extensions(c, sets, t, last):
+        c.append(x)
+        if aux(c, sets, i, t, sets.index(x)):
+            return True
+        c.pop()
+    
+    return False
+    
+def uniao(sets):
+    tamanhoTodos = calculaElementos(sets)
+    c = []
+    for i in range(len(sets)+1):
+        if aux(c, sets, i, tamanhoTodos, -1):
+            return len(c)

@@ -1,0 +1,40 @@
+def complete(p,c,i):
+    for ind,palavra in enumerate(p):
+        if palavra[i[ind]:] != "":
+            return False
+    return True
+    
+def extensions(p,c,i):
+    l = []
+    for ind,string in enumerate(p):
+        if string[i[ind]:] != "":
+            l.append(string[i[ind]])
+            i[ind] += 1
+    return l
+    
+def valid(p,c):
+    newC = "".join(c)
+    for palavra in p:
+        if newC.find(palavra) == -1:
+            return False
+            
+    return True
+    
+def aux(p,c, i):
+    print(c)
+    if complete(p,c,i):
+        return valid(p,c)
+    for x in extensions(p,c,i):
+        c.append(x)
+        if aux(p,c, i):
+            return True
+        c.pop()
+    return False
+    
+def superstring(strings):
+    c = []
+    ind = []
+    for s in strings:
+        ind.append(0)        
+    if aux(strings,c, ind):
+        return c

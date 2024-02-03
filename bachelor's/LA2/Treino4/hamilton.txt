@@ -1,0 +1,41 @@
+def complete(p,c,i):
+    len(c) == i
+    
+def extensions(p,c,i):
+    if not c:
+        return p.keys()
+    l = []
+    print(c)
+    for vertice in c:
+        for new in p[vertice]:
+            if new not in c:
+                l.append(new)
+    return l
+
+def valid(p,c,i):
+    return True
+    
+def aux(p,c,i):
+    if complete(p,c,i):
+        return valid(p,c,i)
+    for x in extensions(p,c,i):
+        c.append(x)
+        if aux(p,c,i):
+            return True
+        c.pop()
+    return False
+    
+def hamilton(arestas):
+    adj = {}
+    for (x,y) in arestas:
+        if x not in adj:
+            adj[x] = set()
+        adj[x].add(y)
+        if y not in adj:
+            adj[y] = set()
+        adj[y].add(x)
+        
+    c = []
+    for i in range(1, len(arestas)+1):
+        if aux(adj,c,i):
+            return c

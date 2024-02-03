@@ -1,0 +1,32 @@
+def complete(atual,i):
+    return atual == i
+
+def extensions(vertices,c,atual):
+    return vertices if not c else filter(lambda x: x>=c[-1], vertices)
+
+def valid(arestas,c):
+    for (x,y) in arestas:
+        if x not in c and y not in c: 
+            return False
+    return True
+
+def aux(vertices,arestas,c,i,atual):
+    if complete(atual, i):
+        return valid(arestas,c)
+    for x in extensions(vertices,c,atual):
+        c.append(x)
+        if aux(vertices,arestas,c,i,atual+1):
+            return True
+        c.pop()
+    return False
+
+def cobertura(arestas):
+    vertices = []
+    for (x,y) in arestas:
+        if x not in vertices:
+            vertices.append(x)
+        if y not in vertices:
+            vertices.append(y)
+    for i in range(len(arestas)+1):
+        if aux(vertices,arestas,[],i,0):
+            return i
